@@ -1,6 +1,7 @@
 package com.cisco.service;
 
 import java.util.List;
+import com.cisco.dao.UserDao;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
@@ -21,47 +22,31 @@ import com.cisco.model.User;
 
 @Path("/user")
 public class UserService {
-
+	
+	public UserDao userDao = new UserDao(); 
+	
+	public void setUserDao(UserDao udao){
+		userDao = udao;
+	}
 	@GET
 	@Path("/{param}")
 	@Produces({MediaType.APPLICATION_JSON})
 	public User getUser(@PathParam("param") Integer id) {
-		Session ses = HibernateUtil.currentSession();
-		try {
-			Criteria crit =  ses.createCriteria(User.class);
-			crit.add(Restrictions.idEq(id));
-			User u = (User)crit.uniqueResult();
-			return u;
-		} finally {
-			HibernateUtil.closeSession();
-		}
+		return userDao.getUser(id);
 	}
 	
 	@GET
 	@Produces({MediaType.APPLICATION_JSON})
 	public List<User> getUsers() {
-		Session ses = HibernateUtil.currentSession();
-		try {
-			return ses.createCriteria(User.class).list();
-		} finally {
-			HibernateUtil.closeSession();
-		}
+		return userDao.getUsers();
 	}
-	
 	
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	//public void createUser(@FormParam("name") String name,@FormParam("age") Integer age,@FormParam("emailId") String emailId){
 	public void createUser(User u){
 		System.out.println("Creating user: "+u.getName()+" Age: "+u.getAge());
-		Session ses = HibernateUtil.currentSession();
-		try {
-			Transaction tx = ses.beginTransaction();
-			ses.save(u);
-			tx.commit();
-		}finally{
-			HibernateUtil.closeSession();
-		}
+		userDao.createUser(u);
 	}
 	
 	@PUT
@@ -70,14 +55,7 @@ public class UserService {
 	//public void updateUser(@FormParam("id") Integer id, @FormParam("name") String name,@FormParam("age") Integer age,@FormParam("emailId") String emailId){
 	public void updateUser(User u){
 		System.out.println("Updating user: "+u.getName());
-		Session ses = HibernateUtil.currentSession();
-		try {
-			Transaction tx = ses.beginTransaction();
-			ses.update(u);
-			tx.commit();
-		}finally{
-			HibernateUtil.closeSession();
-		}
+		userDao.updateUser(u);
 	}
 	
 	@DELETE
@@ -85,16 +63,7 @@ public class UserService {
 	@Produces({MediaType.APPLICATION_JSON})
 	public boolean deleteUser(@PathParam("param") Integer id) {
 		System.out.println("Deleting user: "+id);
-		Session ses = HibernateUtil.currentSession();
-		try {
-			Transaction tx = ses.beginTransaction();
-			User u = (User) ses.load(User.class, id);
-			ses.delete(u);
-			tx.commit();
-			return true;
-		} finally {
-			HibernateUtil.closeSession();
-		}
+		return userDao.deleteUser(id);
 	}
 	
 }

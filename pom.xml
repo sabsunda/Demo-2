@@ -48,6 +48,6 @@
 		
 	</dependencies>
 	<build>
-		<finalName>Angular1</finalName>
+		<finalName>CMADWebApp</finalName>
 	</build>
 </project>

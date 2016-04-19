@@ -2,7 +2,7 @@
 <html>
 <head>
 	<script src="scripts/jquery-2.1.3.js"></script>
-	<script>src="scripts/script.js"</script>
+	<script src="scripts/script.js"> </script>
 </head>
 <body>
 <div id="templates" style="display: none;">

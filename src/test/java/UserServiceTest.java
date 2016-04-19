@@ -12,7 +12,7 @@ import junit.framework.Assert;
 
 public class UserServiceTest {
 
-	@Test(expected=IllegalArgumentException.class)
+	@Test
 	public void testGetUser() {
 		//Test valid id
 		UserDao mockUserDao = mock(UserDao.class);

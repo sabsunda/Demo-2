@@ -38,6 +38,7 @@ public class UserService {
 	@GET
 	@Produces({MediaType.APPLICATION_JSON})
 	public List<User> getUsers() {
+		System.out.println("Getting users: ");
 		return userDao.getUsers();
 	}
 	

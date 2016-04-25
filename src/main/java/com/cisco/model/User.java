@@ -1,18 +1,14 @@
 package com.cisco.model;
 
 
-import java.util.Date;
-
 public class User {
 
-	private Integer id;
+	private Integer id;	
 	private String name="";
 	private String emailId="";
 	private String password="";
-	private Date joinDate=new Date();
-	private Integer age;
-	private String state="";
-
+	private String info="";
+	
 	public Integer getId() {
 		return id;
 	}
@@ -37,27 +33,16 @@ public class User {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	public Date getJoinDate() {
-		return joinDate;
+	
+	public String getInfo() {
+		return info;
 	}
-	public void setJoinDate(Date joinDate) {
-		this.joinDate = joinDate;
-	}
-	public Integer getAge() {
-		return age;
-	}
-	public void setAge(Integer age) {
-		this.age = age;
-	}
-	public String getState() {
-		return state;
-	}
-	public void setState(String state) {
-		this.state = state;
+	public void setInfo(String info) {
+		this.info = info;
 	}
 	
 	public String toString() {
-		String content = "Name = "+getName()+"\nEmail = "+getEmailId()+"\nJoin Date = "+getJoinDate()+"\nAge = "+getAge();
+		String content = "UserId = " + "\nName = "+getName()+"\nEmail = "+getEmailId()+ "\nPassword = " + getPassword() + "\nInfo = "+getInfo();
 		return content;
 	}
 

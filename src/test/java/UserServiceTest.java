@@ -2,7 +2,7 @@ import static org.mockito.Mockito.*;
 
 
 import org.junit.Test;
-import org.mockito.Mock;
+
 
 import com.cisco.dao.UserDao;
 import com.cisco.model.User;
@@ -18,11 +18,11 @@ public class UserServiceTest {
 		UserDao mockUserDao = mock(UserDao.class);
 		User u = new User();
 		u.setName("Manish");
-		when(mockUserDao.getUser(anyInt())).thenReturn(u);
+		when(mockUserDao.getUser("Manish")).thenReturn(u);
 		
 		UserService service = new UserService();
 		service.setUserDao(mockUserDao);
-		u = service.getUser(1);
+		u = service.getUser("Manish");
 		Assert.assertEquals("Manish", u.getName());	
 		
 	}

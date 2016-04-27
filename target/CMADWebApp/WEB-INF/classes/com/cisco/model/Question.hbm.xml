@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="com.cisco.model.Question" table="questions" schema="cmaddb" >
+		<id name="id" type="int">
+			<column name="q_id"/>
+			<generator class="native" />
+		</id>		
+		<property name="title">
+			<column name="title"/>
+		</property>
+		<property name="createdOn" >
+			<column name="created_on"/>
+		</property>
+		<property name="tags" type="string">
+			<column name="tags" length="45" />
+		</property>		
+		<property name="views" type="int">
+			<column name="views"/>
+		</property>
+		<property name="userId" type="int">
+			<column name="u_id"/>
+		</property>
+	</class>
+</hibernate-mapping>
+

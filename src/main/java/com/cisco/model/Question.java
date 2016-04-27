@@ -1,20 +1,20 @@
 package com.cisco.model;
 import java.sql.Timestamp;
 
+import javax.persistence.CascadeType;
+import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 public class Question {
-
 	private Integer id;	
 	private String title;
 	private Timestamp  createdOn;
 	private String tags="";
 	private Integer views;
-	
-	@ManyToOne
-    @JoinColumn(name = "u_id")
-	private User user;
+	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinColumn(name = "u_id")	
+	private Integer userId;
 	
 	public Integer getId() {
 		return id;
@@ -56,16 +56,17 @@ public class Question {
 		this.views = views;
 	}
 
-	public User getUser() {
-		return user;
+	
+	public Integer getUserId() {
+		return userId;
 	}
 
-	public void setUser(User user) {
-		this.user = user;
+	public void setUserId(Integer userId) {
+		this.userId = userId;
 	}
 
 	public String toString() {
-		String content = "QuestionId = " + "\nTitle = "+getTitle()+"\nCreated on = "+getCreatedOn()+ "\nTags = " + getTags() + "\nViews = "+getViews() + "\nUser name = " + getUser().getName();
+		String content = "QuestionId = " + "\nTitle = "+getTitle()+"\nCreated on = "+getCreatedOn()+ "\nTags = " + getTags() + "\nViews = "+getViews() + "\nUser Id = " + getUserId();
 		return content;
 	}
 

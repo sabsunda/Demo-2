@@ -1,0 +1,10 @@
+com\cisco\dao\QuestionDao.class
+com\cisco\dao\UserDao.class
+com\cisco\service\AuthFilter.class
+com\cisco\service\UserService.class
+com\cisco\model\User.class
+com\cisco\service\BasicAuthentication.class
+com\cisco\service\SignupService.class
+com\cisco\model\Question.class
+com\cisco\service\QuestionService.class
+com\cisco\service\HibernateUtil.class

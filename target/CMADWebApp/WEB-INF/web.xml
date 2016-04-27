@@ -4,7 +4,16 @@
 
 <web-app>
 	<display-name>Archetype Created Web Application</display-name>
-	
+	<filter>
+    	<filter-name>AuthenticationFilter</filter-name>
+    	<filter-class>com.cisco.service.AuthFilter</filter-class>
+  	</filter>
+  	
+  	<filter-mapping>
+    	<filter-name>AuthenticationFilter</filter-name>
+    	<url-pattern>/rest/signup/*</url-pattern>
+  	</filter-mapping>
+  
 	<servlet>
 		<servlet-name>jersey-serlvet</servlet-name>
 		<servlet-class>
@@ -30,14 +39,5 @@
 		<url-pattern>/rest/*</url-pattern>
 	</servlet-mapping>
 	
-	<filter>
-    	<filter-name>AuthenticationFilter</filter-name>
-    	<filter-class>com.cisco.service.AuthFilter</filter-class>
-  	</filter>
-  	
-  	<filter-mapping>
-    	<filter-name>AuthenticationFilter</filter-name>
-    	<url-pattern>/rest/signup/*</url-pattern>
-  	</filter-mapping>
-  
+	
 </web-app>

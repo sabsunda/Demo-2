@@ -3,7 +3,6 @@ package com.cisco.service;
 import java.io.IOException;
 import java.util.Base64;
 import java.util.StringTokenizer;
-
 import com.cisco.dao.UserDao;
 import com.cisco.model.User;
 

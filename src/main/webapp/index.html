@@ -62,43 +62,18 @@
 		</nav>
 
         <!-- Top content -->
-								
+		<div id="q-table-template" style="display: none;">
+			<table>
+				<tr><td>q_id</td><td> <button type="button" class="btn-answer"> title </button></td><td><ul><li>no-of-views</li><li>views</li></ul></td></tr>
+			</table>
+		</div>	
+		
 		<div class="table-responsive">
-			<table class="table">
-				<thead>
-					<tr><th>Views</th><th>Answers</th><th>Title</th></tr>
-				</thead>
-				<tbody>
-					<tr>
-						<td>1</td>
-						<td>1</td>
-						<td>
-							<ul >
-								<li>
-									How to debug in Linux debugger? gdxaxaxkjsanbxlkjsanxlsanxlksanxlksancxlksancxlsancxlsaknxhsakjcxnbancxlsancxlsanxlsanxlsanxlsanxlksanxlka
-								</li>
-								<li>
-									<div id="Tag">
-										Linux
-									</div>
-									<div id="createdAt">
-										Modified 1 min Jeyagopal
-									</div>
-									
-								</li>
-							</ul>
-						</td>
-					</tr>
-					<tr>
-						<td>1</td>
-						<td>1</td>
-						<td>
-							How nuclear plant works? gdxaxaxkjsanbxlkjsanxlsanxlksanxlksancxlksancxlsancxlsaknxhsakjcxnbancxlsancxlsanxlsanxlsanxlsanxlksanxlka
-						</td>
-					</tr>
-				</tbody>
+			<table class="table" id = "q-table">
+				<th></td><td> <button type="button" class="btn-answer"> </button></td><td><ul><li></li><li></li></ul></td></th>
 			</table>
 		</div>
+		
 		<div class="top-content">        	
             <div class="inner-bg">
                 <div class="container">
@@ -118,6 +93,9 @@
 		                        		<div class="form-top-right">
 		                        			<i class="fa fa-user"></i>
 		                        		</div>
+										<div class = "login-error-info" style="display: none;">
+											<h1> Your username or password is incorrect. Please try again</h1>
+										</div>
 		                            </div>
 		                            <div class="form-bottom">				                    
 										<div class="form-group">
@@ -175,8 +153,8 @@
 		                            </div>
 		                            <div class="form-bottom">
 				                        <div class="form-group">
-				                        	<label class="sr-only" for="form-email">Email</label>
-				                        	<input type="text" name="form-email" placeholder="Email..." class="form-email form-control" id="form-email">
+				                        	<label class="sr-only" for="form-email">Name</label>
+				                        	<input type="text" name="form-email" placeholder="Name..." class="form-email form-control" id="form-email">
 				                        </div>
 				                        <div class="form-group">
 				                    		<label class="sr-only" for="form-password">Password</label>

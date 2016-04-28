@@ -10,7 +10,7 @@ import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
+import com.cisco.service.BasicAuthentication;
 /**
  * Authenitcation filter that will be invoked before every request to an API
  * resource
@@ -33,17 +33,19 @@ public class AuthFilter implements Filter {
 			return;
 		}*/
 		
+		System.out.println("Triggering --------------------------doFilter");
+		
 		// Check if this request is already authenticated in a session
-		if (hreq.getSession().getAttribute("isAlreadySigned") != null) {
+		/*if (hreq.getSession().getAttribute("isAlreadySigned") != null) {
 			System.out.println("Authenitcated user, proceed with the api call");
 			chain.doFilter(req, res);
 			return;
-		}
+		}*/
 		// Not an already authenticated user, check for credentials
 		// Get basic auth header
 		String basicAuthHeader = hreq.getHeader("Authorization");
 		if (basicAuthHeader == null) {
-			System.out.println("Unauthenticated");
+			System.out.println("Unauthenticated-1");
 			hres.sendError(401, "Unauthenticated");
 			return;
 		}
@@ -56,10 +58,12 @@ public class AuthFilter implements Filter {
 		boolean authenticationStatus = authenticationService.authenticate(authCredentials);
 		
 		if (authenticationStatus) {
+			System.out.println("Authenticated");
 			hreq.getSession().setAttribute("isAlreadySigned", "true"); 
 			chain.doFilter(hreq, hres);
 		} else {
 			if (hres instanceof HttpServletResponse) {
+				System.out.println("Unauthenticated-2");
 				HttpServletResponse httpServletResponse = (HttpServletResponse) hres;
 				httpServletResponse
 						.setStatus(HttpServletResponse.SC_UNAUTHORIZED);

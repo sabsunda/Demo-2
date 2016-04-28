@@ -14,15 +14,20 @@ jQuery(document).ready(function() {
     	$.backstretch("resize");
     });
     
-    /*var xmlhttp;	   
-    // put more code here in case you are concerned about browsers that do not provide XMLHttpRequest object directly
-    xmlhttp = new XMLHttpRequest();
-
-    var url = "http://localhost:8080/CMADWebApp/rest/signup" + empno.value;*/
-    
-	/*
+    /*
         Form
     */
+	
+	$.get("rest/question", function(data){
+		var rowTemplate = $("#q-table-template table").html();
+		console.log(rowTemplate);
+		for(index in data){
+			var row = rowTemplate.replace("q_id",data[index].id)
+						.replace("title",data[index].title)
+						.replace("no-of-views",data[index].views)
+			$("#q-table").append(row);
+		}
+	});
 	
 	$('.btn-questions').on('click', function() {
 		
@@ -63,28 +68,33 @@ jQuery(document).ready(function() {
     });	
 	
 	$('.btn-ask-question').on('click', function() {
-			
-		var  parent_fieldset = $('.registration-form fieldset:first-child');
+		$.ajax({
+			url: "rest/signup",
+			data: {},
+			error: 	function(xhr, statusText, errorThrown){
+						var  parent_fieldset = $('.registration-form fieldset:first-child');
 		
-		for (var i = 0; i < 2; i++) {
-			if(parent_fieldset.is(':visible')) {
-				parent_fieldset.fadeOut(400, function() {
-					$(".table-responsive").fadeOut(400, function(){
-						$('.text').fadeIn('slow');
-						$('.login-form fieldset:first-child').fadeIn('slow');	
-					})							
-				});				
-				exit;
-			}
-			
-			 parent_fieldset =  parent_fieldset.next();
-		}
-		
-		$(".table-responsive").fadeOut(400, function(){
-			$('.text').fadeIn('slow');
-			$('.login-form fieldset:first-child').fadeIn('slow');
+						for (var i = 0; i < 2; i++) {
+							if(parent_fieldset.is(':visible')) {
+								parent_fieldset.fadeOut(400, function() {
+									$(".table-responsive").fadeOut(400, function(){
+										$('.text').fadeIn('slow');
+										$('.login-form fieldset:first-child').fadeIn('slow');	
+									})							
+								});				
+								exit;
+							}
+							
+							 parent_fieldset =  parent_fieldset.next();
+						}
+						
+						$(".table-responsive").fadeOut(400, function(){
+							$('.text').fadeIn('slow');
+							$('.login-form fieldset:first-child').fadeIn('slow');
+						});
+					}
 		});
-
+		
 	}); 
 
     $(".btn-signup-page").click(function(){
@@ -166,22 +176,6 @@ jQuery(document).ready(function() {
 		
 	}); 
 	
-	// Login
-    $('.registration-form .btn-login').on('click', function() {
-    	var parent_fieldset = $(this).parents('fieldset');
-    	var next_step = true;
-    	
-    	parent_fieldset.find('input[type="text"], input[type="password"]').each(function() {
-    		if( $(this).val() == "" ) {
-    			$(this).addClass('input-error');
-    			next_step = false;
-    		}
-    		else {
-    			$(this).removeClass('input-error');
-    		}
-    	});   	
-    	
-    });
 
 	// next step
     $('.registration-form .btn-next').on('click', function() {
@@ -213,8 +207,88 @@ jQuery(document).ready(function() {
     	});
     });
     
+	
+	// Login
+	$('.login-form').on('submit', function(e) {
+       	var parent_fieldset = $(this).parents('fieldset');
+		var emptyCredential = false;
+    	
+		$(this).find('input[type="text"], input[type="password"]').each(function() {
+			if( $(this).val() == "" ) {
+				e.preventDefault();
+    			$(this).addClass('input-error');
+				emptyCredential = true;
+    		}
+		});
+    	
+		if(emptyCredential == false) {
+			var email = $("#form-email").val();
+			var password = $("#form-password").val();
+			
+			/*$.ajax({
+				url: "/rest/signup",
+				beforeSend: function (xhr) {
+					xhr.setRequestHeader ("Authorization", "Basic " + btoa(email + ":" + password));
+				},
+				error: 	function(xhr, statusText, errorThrown){
+					e.preventDefault();
+					$(this).addClass('input-error');
+				},
+				success: function(){
+					$(this).removeClass('input-error');
+				}
+			});*/
+			
+			/*$.ajax({
+				xhrFields: {
+					withCredentials: true
+				},
+				headers: {
+					'Authorization': 'Basic ' + btoa(email + ":" + password)
+				},
+				url: "rest/signup",
+				error: 	function(xhr, statusText, errorThrown){
+					e.preventDefault();
+					$(this).addClass('input-error');
+				}
+			});*/
+			
+			
+			if (typeof XMLHttpRequest == "undefined"){
+				XMLHttpRequest = function () {
+					try { return new ActiveXObject("Msxml2.XMLHTTP.6.0"); }
+					  catch (e) {}
+					try { return new ActiveXObject("Msxml2.XMLHTTP.3.0"); }
+					  catch (e) {}
+					try { return new ActiveXObject("Msxml2.XMLHTTP"); }
+					  catch (e) {}
+					//Microsoft.XMLHTTP points to Msxml2.XMLHTTP.3.0 and is redundant
+					throw new Error("This browser does not support XMLHttpRequest.");
+				};
+			}
+			
+			// using XMLHttpRequest
+			var xhr = new XMLHttpRequest();
+			
+			xhr.open("GET", "rest/signup", false);
+			xhr.withCredentials = true;
+			xhr.setRequestHeader("Authorization", 'Basic ' + btoa(email + ":" + password));
+			xhr.send();
+		
+			if(xhr.status == 200)  {
+				$(this).removeClass('input-error');
+			}else {
+				$(".login-error-info").fadeIn();
+				$(this).find('input[type="text"], input[type="password"], textarea').each(function() {
+					e.preventDefault();
+					$(this).addClass('input-error');
+				});
+			}
+		}
+    	
+    });
     // submit
-    $('.registration-form').on('submit', function(e) {
+   $('.registration-form').on('submit', function(e) {
     	
     	$(this).find('input[type="text"], input[type="password"], textarea').each(function() {
     		if( $(this).val() == "" ) {
@@ -228,6 +302,18 @@ jQuery(document).ready(function() {
     	
     });
 
+	/*$('table :button').on('click', function() {	
+		$(".table-responsive").fadeOut(400, function(){
+	
+		});
+	});*/
+	
+	/*$(document).on("keyup", function (event) {
+        if (event.which == 13) {
+            $("#clicking").trigger('click');
+        }
+    });*/
+	
     
     
 });

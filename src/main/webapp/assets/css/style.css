@@ -117,6 +117,15 @@ ul.navbar-nav {
   background: url(../img/Search-52.png);  
 }
 
+.btn-answer {
+    border: none;
+    background-color: transparent;
+    outline: none;
+}
+.btn-answer:focus {
+    border: none;
+}
+
 /***** Top content *****/
 
 .table-responsive{font-size: 20px;}

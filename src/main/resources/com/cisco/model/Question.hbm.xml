@@ -20,9 +20,9 @@
 		<property name="views" type="int">
 			<column name="views"/>
 		</property>
-		<many-to-one name="User" class="com.cisco.model.User"
-            column="u_id" unique="true" not-null="true"
-            cascade="all" />
+		<property name="userId" type="int">
+			<column name="u_id"/>
+		</property>
 	</class>
 </hibernate-mapping>
 
